@@ -1,44 +1,42 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog"
-
-interface Client {
-  id: number
-  name: string
-  email: string
-  phone: string
-  lastContact: string
-}
+  DialogFooter
+} from '@/components/ui/dialog';
+import { Client } from './employee-tables/components_client-list';
 
 interface EditClientModalProps {
-  client: Client
-  isOpen: boolean
-  onClose: () => void
-  onSave: (updatedClient: Client) => void
+  client: Client;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (updatedClient: Client) => void;
 }
 
-export function EditClientModal({ client, isOpen, onClose, onSave }: EditClientModalProps) {
-  const [editedClient, setEditedClient] = useState(client)
+export function EditClientModal({
+  client,
+  isOpen,
+  onClose,
+  onSave
+}: EditClientModalProps) {
+  const [editedClient, setEditedClient] = useState(client);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedClient({ ...editedClient, [e.target.name]: e.target.value })
-  }
+    setEditedClient({ ...editedClient, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSave(editedClient)
-    onClose()
-  }
+    e.preventDefault();
+    onSave(editedClient);
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -93,6 +91,5 @@ export function EditClientModal({ client, isOpen, onClose, onSave }: EditClientM
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-

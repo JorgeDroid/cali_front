@@ -9,12 +9,12 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog';
-
+import { Client } from './employee-tables/components_client-list';
 interface DeleteClientModalProps {
   clientName: string;
   isOpen: boolean;
   onClose: () => void;
-  onDelete: () => void;
+  onDelete: (client: Client) => void;
 }
 
 export function DeleteClientModal({
@@ -23,8 +23,8 @@ export function DeleteClientModal({
   onClose,
   onDelete
 }: DeleteClientModalProps) {
-  const handleDelete = () => {
-    onDelete();
+  const handleDelete = (client: Client) => {
+    onDelete(client);
     onClose();
   };
 
@@ -42,7 +42,7 @@ export function DeleteClientModal({
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleDelete}>
+          <Button variant="destructive" onClick={(e) => handleDelete}>
             Delete
           </Button>
         </DialogFooter>

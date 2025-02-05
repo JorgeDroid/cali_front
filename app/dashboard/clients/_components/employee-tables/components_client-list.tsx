@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pencil, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,78 +13,53 @@ import {
 } from '@/components/ui/table';
 import { EditClientModal } from '../edit-client-modal';
 import { DeleteClientModal } from '../delete-client-modal';
+import { deleteClient, getClients, updateClient } from '@/services/api/clients';
 
-interface Client {
-  id: number;
+export interface Client {
+  id: string;
   name: string;
   email: string;
   phone: string;
   lastContact: string;
 }
 
-// This would typically come from your backend
-const mockClients: Client[] = [
-  {
-    id: 1,
-    name: 'Acme Corp',
-    email: 'contact@acme.com',
-    phone: '+1 (555) 123-4567',
-    lastContact: '2023-05-15'
-  },
-  {
-    id: 2,
-    name: 'Globex Corporation',
-    email: 'info@globex.com',
-    phone: '+1 (555) 987-6543',
-    lastContact: '2023-05-14'
-  },
-  {
-    id: 3,
-    name: 'Soylent Corp',
-    email: 'hello@soylent.com',
-    phone: '+1 (555) 246-8135',
-    lastContact: '2023-05-13'
-  },
-  {
-    id: 4,
-    name: 'Initech',
-    email: 'support@initech.com',
-    phone: '+1 (555) 369-2584',
-    lastContact: '2023-05-12'
-  },
-  {
-    id: 5,
-    name: 'Umbrella Corporation',
-    email: 'info@umbrella.com',
-    phone: '+1 (555) 795-1357',
-    lastContact: '2023-05-11'
-  }
-];
-
 export default function ClientList() {
-  const [clients, setClients] = useState(mockClients);
+  const [clientData, setClientData] = useState<Client[]>([]);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [deletingClient, setDeletingClient] = useState<Client | null>(null);
+  const [clients, setClients] = useState<Client[]>([]);
+  const handleEditClient = async (client: Client) => {
+    await updateClient('token', client.id, clientData);
+  };
+
+  const handleDeleteClient = async (client: Client) => {
+    await deleteClient('token', client.id);
+  };
 
   const handleEdit = (client: Client) => {
-    setEditingClient(client);
+    handleEditClient(client);
   };
 
   const handleDelete = (client: Client) => {
-    setDeletingClient(client);
+    handleDeleteClient(client);
   };
 
   const handleSaveEdit = (updatedClient: Client) => {
-    setClients(
-      clients.map((c) => (c.id === updatedClient.id ? updatedClient : c))
-    );
+    handleEditClient(updatedClient);
   };
 
-  const handleConfirmDelete = () => {
-    if (deletingClient) {
-      setClients(clients.filter((c) => c.id !== deletingClient.id));
-    }
+  const handleConfirmDelete = (client: Client) => {
+    handleDeleteClient(client);
   };
+
+  const handleGetClients = async (token: string) => {
+    let clientsData = await getClients(token);
+    setClients(clientsData);
+  };
+
+  useEffect(() => {
+    handleGetClients('token');
+  }, []);
 
   return (
     <div className="mx-auto w-full  p-6">
@@ -163,7 +138,7 @@ export default function ClientList() {
           clientName={deletingClient.name}
           isOpen={!!deletingClient}
           onClose={() => setDeletingClient(null)}
-          onDelete={handleConfirmDelete}
+          onDelete={handleDeleteClient}
         />
       )}
     </div>
