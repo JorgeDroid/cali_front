@@ -5,30 +5,31 @@ import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import ClientList from './client-tables/components_client-list';
 import { useEffect, useState } from 'react';
-import { getClients } from '@/services/api/clients';
-import { Client } from './client-tables/components_client-list';
-import { Button } from '@/components/ui/button';
-import { ClientRegistrationModal } from './client-tables/new-client-modal';
-type TEmployeeListingPage = {};
+import { getBrands } from '@/services/api/brands';
 
-export default function EmployeeListingPage({}: TEmployeeListingPage) {
-  const [clients, setClients] = useState<Client[]>([]);
+import { Button } from '@/components/ui/button';
+import { ClientRegistrationModal } from './brands-tables/new-client-modal';
+import { Brand } from './brands-tables/components_brand-list';
+import BrandsList from './brands-tables/components_brand-list';
+type TBrandsListingPage = {};
+
+export default function BrandsListingPage({}: TBrandsListingPage) {
+  const [brands, setBrands] = useState<Brand[]>([]);
   const [isCreating, setIsCreating] = useState(false);
 
-  const handleGetClients = async (token: string) => {
-    let clientsData = await getClients(token);
-    setClients(clientsData);
+  const handleGetBrands = async (token: string) => {
+    let brandsData = await getBrands(token);
+    setBrands(brandsData);
   };
 
-  const handleSaveCreate = (newClient: Client) => {
-    handleGetClients('token');
+  const handleSaveCreate = (newBrand: Omit<Brand, 'id'>) => {
+    handleGetBrands('token');
     setIsCreating(false);
   };
 
   useEffect(() => {
-    handleGetClients('token');
+    handleGetBrands('token');
   }, []);
 
   return (
@@ -36,8 +37,8 @@ export default function EmployeeListingPage({}: TEmployeeListingPage) {
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <Heading
-            title={`Clients (${clients.length})`}
-            description="Manage clients"
+            title={`Brands (${brands.length})`}
+            description="Manage brands"
           />
 
           <Button
@@ -54,7 +55,7 @@ export default function EmployeeListingPage({}: TEmployeeListingPage) {
           onSave={handleSaveCreate}
         />
 
-        {clients.length > 0 && <ClientList clients={clients} />}
+        {brands.length > 0 && <BrandsList brands={brands} />}
       </div>
     </PageContainer>
   );

@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog';
-import { Client } from './employee-tables/components_client-list';
+import { Client } from './components_client-list';
 interface DeleteClientModalProps {
   clientName: string;
   isOpen: boolean;

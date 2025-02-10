@@ -5,30 +5,31 @@ import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import ClientList from './client-tables/components_client-list';
 import { useEffect, useState } from 'react';
-import { getClients } from '@/services/api/clients';
-import { Client } from './client-tables/components_client-list';
-import { Button } from '@/components/ui/button';
-import { ClientRegistrationModal } from './client-tables/new-client-modal';
-type TEmployeeListingPage = {};
+import { Model } from './models-tables/components_model-list';
+import ModelsList from './models-tables/components_model-list';
 
-export default function EmployeeListingPage({}: TEmployeeListingPage) {
-  const [clients, setClients] = useState<Client[]>([]);
+import { Button } from '@/components/ui/button';
+
+import { getModels } from '@/services/api/models';
+type TBrandsListingPage = {};
+
+export default function BrandsListingPage({}: TBrandsListingPage) {
+  const [models, setModels] = useState<Model[]>([]);
   const [isCreating, setIsCreating] = useState(false);
 
-  const handleGetClients = async (token: string) => {
-    let clientsData = await getClients(token);
-    setClients(clientsData);
+  const handleGetModels = async (token: string) => {
+    let modelsData = await getModels(token);
+    setModels(modelsData);
   };
 
-  const handleSaveCreate = (newClient: Client) => {
-    handleGetClients('token');
+  const handleSaveCreate = (newModel: Omit<Model, 'id'>) => {
+    handleGetModels('token');
     setIsCreating(false);
   };
 
   useEffect(() => {
-    handleGetClients('token');
+    handleGetModels('token');
   }, []);
 
   return (
@@ -36,8 +37,8 @@ export default function EmployeeListingPage({}: TEmployeeListingPage) {
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <Heading
-            title={`Clients (${clients.length})`}
-            description="Manage clients"
+            title={`Models (${models.length})`}
+            description="Manage models"
           />
 
           <Button
@@ -48,13 +49,13 @@ export default function EmployeeListingPage({}: TEmployeeListingPage) {
           </Button>
         </div>
         <Separator />
-        <ClientRegistrationModal
+        {/* <ModelRegistrationModal
           isOpen={isCreating}
           onClose={() => setIsCreating(false)}
           onSave={handleSaveCreate}
-        />
+        /> */}
 
-        {clients.length > 0 && <ClientList clients={clients} />}
+        {models.length > 0 && <ModelsList models={models} />}
       </div>
     </PageContainer>
   );

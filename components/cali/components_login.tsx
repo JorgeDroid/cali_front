@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,6 +28,12 @@ export default function LoginForm() {
       return;
     }
 
+    if (
+      formData.email === 'admin@caliautocollision.com' &&
+      formData.password === 'admin'
+    ) {
+      router.push('/dashboard/clients');
+    }
     // Here you would typically send the data to your backend
     console.log('Form submitted:', formData);
   };

@@ -3,17 +3,20 @@ import PageContainer from '@/components/layout/page-container';
 import { buttonVariants } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
+import { searchParamsCache } from '@/lib/searchparams';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import ClientList from './client-tables/components_client-list';
+import Link from 'next/link';
+import ClientList from './components_client-list';
 import { useEffect, useState } from 'react';
 import { getClients } from '@/services/api/clients';
-import { Client } from './client-tables/components_client-list';
+import { Client } from './components_client-list';
+import { ClientRegistrationModal } from './new-client-modal';
 import { Button } from '@/components/ui/button';
-import { ClientRegistrationModal } from './client-tables/new-client-modal';
+
 type TEmployeeListingPage = {};
 
-export default function EmployeeListingPage({}: TEmployeeListingPage) {
+export default function ClientListingPage({}: TEmployeeListingPage) {
   const [clients, setClients] = useState<Client[]>([]);
   const [isCreating, setIsCreating] = useState(false);
 
@@ -22,7 +25,7 @@ export default function EmployeeListingPage({}: TEmployeeListingPage) {
     setClients(clientsData);
   };
 
-  const handleSaveCreate = (newClient: Client) => {
+  const handleSaveCreate = (newClient: Omit<Client, 'id'>) => {
     handleGetClients('token');
     setIsCreating(false);
   };

@@ -122,19 +122,72 @@ export const navItems: NavItem[] = [
   {
     title: 'Clients',
     url: '/dashboard/clients',
-    icon: 'user',
+    icon: 'clients',
     shortcut: ['e', 'e'],
     isActive: false,
     items: [] // No child items
   },
   {
-    title: 'Product',
-    url: '/dashboard/product',
-    icon: 'product',
-    shortcut: ['p', 'p'],
+    title: 'Users',
+    url: '/dashboard/users',
+    icon: 'user',
+    shortcut: ['u', 'u'],
     isActive: false,
     items: [] // No child items
   },
+  {
+    title: 'Vehicles',
+    url: '/dashboard/vehicles',
+    icon: 'car',
+    shortcut: ['v', 'v'],
+    isActive: false,
+    items: [
+      {
+        title: 'Brands',
+        url: '/dashboard/brands',
+        icon: 'car',
+        shortcut: ['b', 'b'],
+        isActive: false
+      },
+      {
+        title: 'Models',
+        url: '/dashboard/models',
+        icon: 'car',
+        shortcut: ['m', 'm']
+      },
+      {
+        title: 'Spare Parts',
+        url: '/dashboard/spares',
+        icon: 'car',
+        shortcut: ['v', 'v'],
+        isActive: false
+      }
+    ] // No child items
+  },
+  {
+    title: 'Quotations',
+    url: '/dashboard/quotations',
+    icon: 'quotation',
+    shortcut: ['q', 'q'],
+    isActive: false,
+    items: [] // No child items
+  },
+  {
+    title: 'Jobs',
+    url: '/dashboard/jobs',
+    icon: 'job',
+    shortcut: ['j', 'j'],
+    isActive: false,
+    items: [] // No child items
+  },
+  // {
+  //   title: 'Product',
+  //   url: '/dashboard/product',
+  //   icon: 'product',
+  //   shortcut: ['p', 'p'],
+  //   isActive: false,
+  //   items: [] // No child items
+  // },
   {
     title: 'Account',
     url: '#', // Placeholder as there is no direct link for the parent
@@ -155,13 +208,13 @@ export const navItems: NavItem[] = [
         icon: 'login'
       }
     ]
-  },
-  {
-    title: 'Kanban',
-    url: '/dashboard/kanban',
-    icon: 'kanban',
-    shortcut: ['k', 'k'],
-    isActive: false,
-    items: [] // No child items
   }
+  // {
+  //   title: 'Kanban',
+  //   url: '/dashboard/kanban',
+  //   icon: 'kanban',
+  //   shortcut: ['k', 'k'],
+  //   isActive: false,
+  //   items: [] // No child items
+  // }
 ];

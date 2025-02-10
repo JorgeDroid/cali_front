@@ -11,30 +11,30 @@ import {
   DialogTitle,
   DialogFooter
 } from '@/components/ui/dialog';
-import { Client } from './employee-tables/components_client-list';
+import { Brand } from './components_brand-list';
 
-interface EditClientModalProps {
-  client: Client;
+interface EditBrandModalProps {
+  brand: Brand;
   isOpen: boolean;
   onClose: () => void;
-  onSave: (updatedClient: Client) => void;
+  onSave: (updatedBrand: Brand) => void;
 }
 
-export function EditClientModal({
-  client,
+export function EditBrandModal({
+  brand,
   isOpen,
   onClose,
   onSave
-}: EditClientModalProps) {
-  const [editedClient, setEditedClient] = useState(client);
+}: EditBrandModalProps) {
+  const [editedBrand, setEditedBrand] = useState(brand);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedClient({ ...editedClient, [e.target.name]: e.target.value });
+    setEditedBrand({ ...editedBrand, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(editedClient);
+    onSave(editedBrand);
     onClose();
   };
 
@@ -53,33 +53,7 @@ export function EditClientModal({
               <Input
                 id="name"
                 name="name"
-                value={editedClient.name}
-                onChange={handleChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Email
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={editedClient.email}
-                onChange={handleChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="phone" className="text-right">
-                Phone
-              </Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={editedClient.phone}
+                value={editedBrand.name}
                 onChange={handleChange}
                 className="col-span-3"
               />

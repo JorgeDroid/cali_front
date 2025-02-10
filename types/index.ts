@@ -10,7 +10,14 @@ export interface NavItem {
   label?: string;
   description?: string;
   isActive?: boolean;
+  role?: RoleEnum[];
   items?: NavItem[];
+}
+
+export enum RoleEnum {
+  ADMIN = 'Admin',
+  CLIENT = 'Client',
+  TECHNICIAN = 'Technician'
 }
 
 export interface NavItemWithChildren extends NavItem {

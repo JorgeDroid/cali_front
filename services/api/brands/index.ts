@@ -1,20 +1,20 @@
 import axios from 'axios';
 
-const url = `${process.env.NEXT_PUBLIC_API_URL}/clients`;
+const url = `${process.env.NEXT_PUBLIC_API_URL}/brands  `;
 
-export const getClients = async (token: string) => {
+export const getBrands = async (token: string) => {
   try {
     const response = await axios.get(url, {
-      // headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` }
     });
-    let clients = response.data;
-    return clients.data;
+    let brands = response.data;
+    return brands.data;
   } catch (error) {
     return error;
   }
 };
 
-export const getClient = async (token: string, id: string) => {
+export const getBrand = async (token: string, id: string) => {
   try {
     const response = await axios.get(`${url}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -26,17 +26,10 @@ export const getClient = async (token: string, id: string) => {
   }
 };
 
-export const updateClient = async (token: string, id: string, client: any) => {
+export const updateBrand = async (token: string, id: string, brand: any) => {
   let updateData: any = {
-    name: client.name,
-    lastName: client.lastName,
-    email: client.email,
-    telephone: client.telephone,
-    companyId: client.establishment
+    name: brand.name
   };
-  if (client.password) {
-    updateData.password = client.password;
-  }
   try {
     const response = await axios.put(`${url}/${id}`, updateData, {
       headers: { Authorization: `Bearer ${token}` }
@@ -48,13 +41,9 @@ export const updateClient = async (token: string, id: string, client: any) => {
   }
 };
 
-export const CreateClient = async (token: string, client: any) => {
+export const CreateBrand = async (token: string, brand: any) => {
   let updateData = {
-    name: client.name,
-    lastName: client.lastName,
-    email: client.email,
-    telephone: client.telephone,
-    password: client.password
+    name: brand.name
   };
   try {
     const response = await axios.post(`${url}`, updateData, {
@@ -67,7 +56,7 @@ export const CreateClient = async (token: string, client: any) => {
   }
 };
 
-export const deleteClient = async (token: any, id: any) => {
+export const deleteBrand = async (token: any, id: any) => {
   try {
     const response = await axios.delete(`${url}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }

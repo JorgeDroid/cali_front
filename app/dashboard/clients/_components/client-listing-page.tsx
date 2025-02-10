@@ -22,7 +22,7 @@ export default function EmployeeListingPage({}: TEmployeeListingPage) {
     setClients(clientsData);
   };
 
-  const handleSaveCreate = (newClient: Client) => {
+  const handleSaveCreate = (newClient: Omit<Client, 'id'>) => {
     handleGetClients('token');
     setIsCreating(false);
   };
